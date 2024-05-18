@@ -1,19 +1,17 @@
-FROM nikolaik/python-nodejs AS builder
+FROM node:10-alpine
 
-# ARG CONF_FILE
-WORKDIR /usr/src
-COPY . .
-RUN    node -v; \
-    npm cache clear --force; \
-    npm install; \
-    npm run build; \
-    ls -al; 
+RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
 
-FROM nikolaik/python-nodejs
+WORKDIR /home/node/app
 
-COPY --from=builder /usr/src/* /usr/src/*
-COPY --from=builder /usr/src/runtime/run.sh /usr/bin/run.sh
+COPY package*.json ./
 
-RUN chmod +x /usr/bin/run.sh
+USER node
 
-ENTRYPOINT [ "run.sh" ]
+RUN npm install
+
+COPY --chown=node:node . .
+
+EXPOSE 8080
+
+CMD [ "node", "app.js" ]
