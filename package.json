@@ -1,11 +1,11 @@
 {
-  "name": "country-city-api",
-  "version": "0.0.0",
+  "name": "countries-service",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "debug": "DEBUG=country-city-api:* npm start",
+    "debug": "DEBUG=countries-service:* npm start",
     "watch": "nodemon npm start",
-    "start": "node ./bin/www",
+    "start": "node ./src/bin/www",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "integration:test": "mocha --timeout 50000 --exit ./test/tests.js",

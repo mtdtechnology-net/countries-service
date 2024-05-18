@@ -1,15 +1,23 @@
-FROM node:10-alpine
+# Use the official Node.js image.
+FROM node:14
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
+# Create and change to the app directory.
+WORKDIR /usr/src/app
 
-WORKDIR /home/node/app
-
+# Copy application dependency manifests to the container image.
 COPY package*.json ./
 
-USER node
+# Copy the build script to the container.
+COPY runtime/build.sh ./
 
-RUN npm install
+# Run the build script.
+RUN chmod +x ./build.sh
 
-COPY --chown=node:node . .
+# Copy the rest of the application code.
+COPY . .
 
-CMD [ "node", "app.js" ]
+# Expose the port the app runs on.
+EXPOSE 3000
+
+# Run the web service on container startup.
+CMD [ "npm", "start" ]

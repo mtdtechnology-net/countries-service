@@ -7,7 +7,7 @@
 
 const debug = require('debug')('country-city-api:server');
 const http = require('http');
-const app = require('../app');
+const app = require('../../app');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -53,8 +53,6 @@ const server = http.createServer(app);
  */
 
 server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Event listener for HTTP server "error" event.
@@ -84,6 +82,8 @@ function onError(error) {
   }
 }
 
+server.on('error', onError);
+
 /**
  * Event listener for HTTP server "listening" event.
  */
@@ -96,3 +96,5 @@ function onListening() {
   console.log(`Listening on ${bind}`);
   debug(`Listening on ${bind}`);
 }
+
+server.on('listening', onListening);

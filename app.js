@@ -8,14 +8,15 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const swaggerUi = require('swagger-ui-express');
-const corsConfig = require('./config/cors');
-
 const rateLimit = require('express-rate-limit');
-const rateLimitConfig = require('./config/rateLimit');
+const corsConfig = require('./src/config/cors');
+
+const rateLimitConfig = require('./src/config/rateLimit');
+
 const rateLimiter = rateLimit(rateLimitConfig);
 
-const indexRouter = require('./routes/index');
-const countryRouter = require('./routes/countries');
+const indexRouter = require('./src/routes/index');
+const countryRouter = require('./src/routes/countries');
 
 const app = express();
 
