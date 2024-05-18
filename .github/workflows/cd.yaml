@@ -40,7 +40,7 @@ jobs:
 
       - name: Deploy Cloud Run service
         run: |
-          gcloud run deploy --image=gcr.io/mtd-claim/countries-service:${{ github.run_number }} --region="europe-west4" --quiet
+          gcloud run deploy api-countries --image=gcr.io/mtd-claim/countries-service:${{ github.run_number }} --region="europe-west4" --quiet
            
       - name: Extract branch name
         if: always()
