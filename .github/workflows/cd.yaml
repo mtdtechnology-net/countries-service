@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
    
     steps:
+      - uses: actions/checkout@v3
 
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
@@ -29,8 +30,6 @@ jobs:
 
       - name: Build Docker Image
         run: |-
-          cd  ${{ github.workspace }}
-          ls -la
           docker build . --file Dockerfile --platform=linux/amd64 --tag gcr.io/mtd-claim/countries-service:${{ github.run_number }}
 
       - name: Push Docker Image to Container Registry GCR
