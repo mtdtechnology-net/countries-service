@@ -29,6 +29,8 @@ jobs:
 
       - name: Build Docker Image
         run: |-
+          pwd
+          ls
           docker build . --file Dockerfile --platform=linux/amd64 --tag gcr.io/mtd-claim/countries-service:${{ github.run_number }}
 
       - name: Push Docker Image to Container Registry GCR
