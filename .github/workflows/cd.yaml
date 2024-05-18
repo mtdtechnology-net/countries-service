@@ -29,29 +29,17 @@ jobs:
 
       - name: Build Docker Image
         run: |-
-          if [[ "${{ github.event.pull_request.merged }}" == "false" && "${{ github.event.action }}" == "closed" ]]; then
-            echo "Skip build image"
-          else
             docker build . --file Dockerfile --platform=linux/amd64 --tag gcr.io/mtd-claim/countries-service:${{ github.run_number }}
-          fi
 
       - name: Push Docker Image to Container Registry GCR
         run: |-
-          if [[ "${{ github.event.pull_request.merged }}" == "false" && "${{ github.event.action }}" == "closed" ]]; then
-            echo "Skip image upload"
-          else
             docker push gcr.io/mtd-claim/ountries-service:${{ github.run_number }}
-          fi
           docker system prune -a -f
 
 
       - name: Deploy Cloud Run service
         run: |
-          if [[ "${{ github.event.pull_request.merged }}" == "false" && "${{ github.event.action }}" == "closed" ]]; then
-            echo "Skip deploy"
-          else
             gcloud run deploy --image=gcr.io/mtd-claim/ountries-service:${{ github.run_number }} --region="europe-west4" --quiet
-          fi
            
       - name: Extract branch name
         if: always()
