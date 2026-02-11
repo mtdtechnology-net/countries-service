@@ -20903,11 +20903,6 @@ const CountriesState = [
         state_code: 'AN',
       },
       {
-        id: 140000,
-        name: 'Malaga',
-        state_code: 'MA',
-      },
-      {
         id: 1148,
         name: 'Araba Álava Province',
         state_code: 'VI',
