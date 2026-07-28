@@ -51,6 +51,9 @@ router.get('/states', CountryController.getCountriesState);
 router.get('/states/q', CountryController.getSingleCountryStates);
 router.get('/state/cities/q', CountryController.getStateCities);
 
+router.get('/counties', CountryController.getCountriesCounties);
+router.get('/counties/q', CountryController.getSingleCountryCounties);
+
 router.get('/random', CountryController.getRandomCountry);
 
 module.exports = router;
