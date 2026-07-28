@@ -5,6 +5,7 @@ let CountriesAndFlag = require('../model/countriesAndFlag');
 const CountriesAndCodes = require('../model/countriesAndCodes');
 const CountriesAndStates = require('../model/countriesAndState');
 const CountriesStateCity = require('../model/countriesStateCity');
+const CountriesAndCounties = require('../model/countriesAndCounties.json');
 // const Finder = require('../helpers/finder');
 const Respond = require('../helpers/respond');
 const { getCountriesPopulation, getCitiesPopulation } = require('./dataHub');
@@ -755,6 +756,50 @@ class CountryController {
         return Respond.error(res, 'country not found', 404);
       }
       return Respond.success(res, `states in ${data.name} retrieved`, data);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  /**
+   * Get the curated Claim countries and their counties (a fixed business subset,
+   * not the full world dataset backing /states)
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
+   */
+  static getCountriesCounties(req, res, next) {
+    try {
+      const data = CountriesAndCounties;
+      return Respond.success(res, 'countries and counties retrieved', data);
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  /**
+   * Get a single Claim country and its counties
+   * @param {Request} req
+   * @param {Response} res
+   * @param {Callback} next callback function that invokes the next express middleware function
+   */
+  static getSingleCountryCounties(req, res, next) {
+    try {
+      const { country, code } = req.query;
+      if (!country && !code) {
+        return Respond.error(res, 'missing param (country or code)', 400);
+      }
+      let data = null;
+      if (country) {
+        data = CountriesAndCounties.find((x) => x.name.trim().toLowerCase() === country.trim().toLowerCase());
+      }
+      if (code) {
+        data = CountriesAndCounties.find((x) => x.code.trim().toLowerCase() === code.trim().toLowerCase());
+      }
+      if (!data) {
+        return Respond.error(res, 'country not found', 404);
+      }
+      return Respond.success(res, `counties in ${data.name} retrieved`, data);
     } catch (err) {
       return next(err);
     }

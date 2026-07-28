@@ -12,6 +12,7 @@ const FLAG_METHODS = require('./paths/flags');
 const LOCATION_METHODS = require('./paths/location');
 const POPULATION_METHODS = require('./paths/population');
 const STATE_METHODS = require('./paths/states');
+const COUNTY_METHODS = require('./paths/counties');
 const COUNTRY_STATE_CITY_METHOD = require('./paths/countriesStateCity');
 const RANDOM_METHODS = require('./paths/random');
 
@@ -86,6 +87,10 @@ module.exports = {
     },
     '/state/cities': {
       post: COUNTRY_STATE_CITY_METHOD.getStateCities
+    },
+    '/counties': {
+      get: COUNTY_METHODS.getCountriesCounties,
+      post: COUNTY_METHODS.getSingleCountryCounties,
     },
     '/random':{
       get: RANDOM_METHODS.getRandomCountry,
